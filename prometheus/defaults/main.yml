@@ -17,37 +17,11 @@ prometheus_dir: prometheus
 prometheus_user: prometheus
 prometheus_data_dir: /var/lib/prometheus
 
-prometheus_no_conf: no
 
 prometheus_alertmanager_url: http://127.0.0.1:9093
 
 prometheus_storage_local_retention: 360h0m0s
 
-prometheus_conf:
-    global:
-      scrape_interval:     15s # By default, scrape targets every 15 seconds.
+prometheus_conf_template_name: prometheus_default.yml
 
-      # Attach these labels to any time series or alerts when communicating with
-      # external systems (federation, remote storage, Alertmanager).
-      external_labels:
-        monitor: 'prometheus'
-
-    # A scrape configuration containing exactly one endpoint to scrape:
-    # Here it's Prometheus itself.
-    scrape_configs:
-      # The job name is added as a label `job=<job_name>` to any timeseries scraped from this config.
-      - job_name: 'prometheus'
-
-        # Override the global default and scrape targets from this job every 5 seconds.
-        scrape_interval: 5s
-
-        target_groups:
-          - targets: ['localhost:9090']
-    
-        file_sd_configs:
-            - names:
-                - '/etc/prometheus/file_sd_configs/*.yml'
-
-    rule_files:
-        - '/etc/prometheus/rules/*.conf'
-    
+prometheus_no_conf: no

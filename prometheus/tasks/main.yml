@@ -62,12 +62,19 @@
   when: result.changed
   notify: restart prometheus
 
+- name: create rules placeholder
+  copy: content="#\n" dest=/etc/prometheus/rules/_placeholder.conf
+  tags:
+    - conf
+    - prometheus_conf
+  when: "{{ not prometheus_no_conf }}"
+
 - name: put prometeus config files
-  template: dest=/etc/prometheus/{{ item }} src={{ item }}
-  with_items:
-      - prometheus.yml
-  tags: conf
-  when: not prometheus_no_conf
+  template: dest=/etc/prometheus/prometheus.yml src={{ prometheus_conf_template_name }}
+  tags:
+    - conf
+    - prometheus_conf
   notify:
       - prometheus check rules
       - reload prometheus
+  when: "{{ not prometheus_no_conf }}"

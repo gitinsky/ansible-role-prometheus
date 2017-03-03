@@ -1,4 +1,0 @@
-# {{ ansible_managed }}
-{{ prometheus_conf | to_nice_yaml }}
-
-{# https://github.com/prometheus/prometheus/blob/master/config/testdata/conf.good.yml #}
