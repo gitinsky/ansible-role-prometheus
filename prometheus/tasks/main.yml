@@ -36,9 +36,7 @@
       
 - name: get package url
   set_fact:
-      prometheus_json: "{{ item }}"
-  with_items: github_release.assets
-  when: "'linux-amd64' in item.name"
+      prometheus_json: "{{ (github_release.assets| selectattr('name', 'match', '.*linux-amd64.*')|list)[0] }}"
 
 - name: ensure prometheus_base_dir and /etc/prometheus/ are presented
   file: dest={{ item }} state=directory
