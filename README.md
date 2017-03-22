@@ -8,7 +8,7 @@ All of the executables have lots of command line and config options, if you miss
 
 ## prometheus/prometheus
 
-Override prometheus.conf by declaring ```prometheus_conf``` variable (see [defaults](blob/develop/prometheus/defaults/main.yml)) or disable it with ```prometheus_no_conf: yes``` and deploy your own.
+Define `prometheus_conf_template_name` to use your own template or disable it with ```prometheus_no_conf: yes``` and deploy it with your own tasks/roles.
 Put your ```file_sd_configs``` to ```/etc/prometheus/file_sd_configs/*.yml``` and notify prometheus with ```runit hup prometheus```.
 Put your ```rule_files``` to ```/etc/prometheus/rules/*.conf```, verify them by notifying ```prometheus check rules``` and notify prometheus with ```runit hup prometheus```.
 
