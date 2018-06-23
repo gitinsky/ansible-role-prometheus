@@ -7,11 +7,10 @@ dependencies:
       when: prometheus_supervisor == "runit"
       tags: runit
 
-    - role: systemd
+    - role: systemd-service-unit
       systemd_service_name: prometheus
       systemd_service_user: "{{ prometheus_user }}"
       systemd_service_command: "/{{ prometheus_base_dir}}/{{ prometheus_dir }}/prometheus"
-      systemd_service_params: "-config.file=/etc/prometheus/prometheus.yml -storage.local.path={{ prometheus_data_dir }} -alertmanager.url=\"{{ prometheus_alertmanager_url }}\" -storage.local.retention={{ prometheus_storage_local_retention }}{{ ' -web.external-url=' + prometheus_web_external_url if prometheus_web_external_url is defined else ''}} -web.console.templates=/{{ prometheus_base_dir}}/{{ prometheus_dir }}/consoles -web.console.libraries=/{{ prometheus_base_dir}}/{{ prometheus_dir }}/console_libraries"
-      systemd_service_config: /etc/prometheus/prometheus.yml
+      systemd_service_params: "--config.file=/etc/prometheus/prometheus.yml --storage.tsdb.path={{ prometheus_data_dir }} --storage.tsdb.retention={{ prometheus_storage_local_retention }}{{ ' --web.external-url=' + prometheus_web_external_url if prometheus_web_external_url is defined else ''}} --web.console.templates=/{{ prometheus_base_dir}}/{{ prometheus_dir }}/consoles --web.console.libraries=/{{ prometheus_base_dir}}/{{ prometheus_dir }}/console_libraries"
       # systemd_service_workdir: "{{ prometheus_data_dir }}"
       when: prometheus_supervisor == "systemd"
