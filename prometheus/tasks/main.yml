@@ -3,7 +3,10 @@
   with_items:
       - python-httplib2
 
-- name: check if prometheus is already installed and get it's version
+- name: add {{ prometheus_user }}
+  user: name={{ prometheus_user }}
+
+- name: check if prometheus is already installed and get its version
   shell: "{{ prometheus_base_dir}}/{{ prometheus_dir }}/prometheus --version"
   register: prometheus_installed_version
   failed_when: no
@@ -55,11 +58,13 @@
              # owner={{ prometheus_user }} group={{ prometheus_user }}
   register: result
 
+- name: print result
+  debug: var=result
+
 - name: make {{ prometheus_base_dir}}/{{ prometheus_dir }} symlink
   file: state=link src={{ item.src }} dest={{ item.dst }}
   with_items:
-      - { src: "{{ result.files[0] }}", dst: "{{ prometheus_base_dir}}/{{ prometheus_dir }}" }
-  when: result.changed
+      - { src: "{{ result.dest }}/{{ result.files[0] }}", dst: "{{ prometheus_base_dir}}/{{ prometheus_dir }}" }
   notify: restart prometheus
 
 - name: create rules placeholder
