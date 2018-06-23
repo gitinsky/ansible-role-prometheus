@@ -20,7 +20,8 @@ scrape_configs:
       - targets: ['localhost:9090']
 
     file_sd_configs:
-      - '/etc/prometheus/file_sd_configs/*.yml'
+      - files:
+        - '/etc/prometheus/file_sd_configs/*.yml'
 
 rule_files:
     - '/etc/prometheus/rules/*.conf'
