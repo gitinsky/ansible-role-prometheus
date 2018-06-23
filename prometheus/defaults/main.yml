@@ -1,8 +1,8 @@
-prometheus_supervisor: runit
-# prometheus_supervisor: systemd
+# prometheus_supervisor: runit
+prometheus_supervisor: systemd
 
 # Allow pre-release (beta) versions
-prometheus_pre_release: yes
+prometheus_pre_release: no
 
 # TODO: Reinstall if there's a new version
 # prometheus_latest: yes
@@ -17,10 +17,7 @@ prometheus_dir: prometheus
 prometheus_user: prometheus
 prometheus_data_dir: /var/lib/prometheus
 
-
-prometheus_alertmanager_url: http://127.0.0.1:9093
-
-prometheus_storage_local_retention: 360h0m0s
+prometheus_storage_local_retention: 15d
 
 prometheus_conf_template_name: prometheus_default.yml
 
