@@ -1,0 +1,2 @@
+- name: put a file sd config to Prom folder
+  template: src=file-sd-config.yml dest=/etc/prometheus/file_sd_configs/{{ targets_group_name }}.yml

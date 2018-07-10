@@ -1,0 +1,10 @@
+- targets:
+{% for host in groups[targets_group_name] %}
+  - "{{ hostvars[host]['ansible_' + iface]['ipv4']['address'] }}:{{ targets_port }}"
+{% endfor %}
+  labels:
+{% for label in labels %}
+{% for key, value in label.iteritems() %}
+    {{ key }}: {{ value }}
+{% endfor %}
+{% endfor %}
