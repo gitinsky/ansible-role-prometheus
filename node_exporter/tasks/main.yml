@@ -38,6 +38,9 @@
   template: src=sudo_megacli.sh dest={{ node_exporter_base_dir }}/sudo_megacli.sh owner=root group=root mode=755
   when: node_exporter_collector_megacli
 
+- name: add {{ node_exporter_user }}
+  user: name={{ node_exporter_user }}
+
 - name: create node_exporter data dir
   file: dest={{ node_exporter_data_dir }} state=directory owner={{ node_exporter_user }} group={{ node_exporter_user }} mode=1777
 
@@ -57,4 +60,4 @@
 - name: make {{ node_exporter_base_dir }}/node_exporter symlink
   file: state=link src="{{ result.files[0] }}/node_exporter" dest="{{ node_exporter_base_dir }}/node_exporter"
   when: result.changed
-  notify: restart node_exporter
+  notify: systemd restart node_exporter
