@@ -1,4 +1,4 @@
-prometheus_supervisor: runit
+prometheus_supervisor: systemd
 
 # Allow pre-release (beta) versions
 node_exporter_pre_release: yes
@@ -38,10 +38,10 @@ node_exporter_collector_ksmd: no
 node_exporter_collector_lastlogin: no
 node_exporter_collector_megacli: no
 node_exporter_collector_meminfo_numa: no
-node_exporter_collector_ntp: no
+node_exporter_collector_ntp: yes
 node_exporter_collector_runit: no
 node_exporter_collector_supervisord: no
-node_exporter_collector_systemd: no
+node_exporter_collector_systemd: yes
 node_exporter_collector_tcpstat: no
 
 node_exporter_collector_megacli_command: "megacli"
