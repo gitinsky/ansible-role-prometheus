@@ -45,3 +45,5 @@ node_exporter_collector_systemd: yes
 node_exporter_collector_tcpstat: no
 
 node_exporter_collector_megacli_command: "megacli"
+
+node_exporter_port: 9100
