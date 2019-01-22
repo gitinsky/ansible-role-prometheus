@@ -1,6 +1,6 @@
 global:
   evaluation_interval: 1m
-  scrape_interval: 1m
+  scrape_interval: {{ prometheus_scrape_interval }}
   scrape_timeout: 10s
 
 rule_files:
@@ -13,7 +13,7 @@ scrape_configs:
       - targets:
         - localhost:9090
 
-{% for job in k8s_prometheus_jobs %}
+{% for job in prometheus_jobs %}
   - job_name: {{ job.name }}
     metrics_path: {{ job.metrics_path }}
     static_configs:
