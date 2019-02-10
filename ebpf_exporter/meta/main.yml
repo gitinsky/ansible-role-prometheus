@@ -1,0 +1,7 @@
+dependencies:
+    - role: bcc-tools
+    - role: systemd-service-unit
+      systemd_service_name: ebpf_exporter
+      systemd_service_user: "{{ ebpf_exporter_user }}"
+      systemd_service_command: "/opt/ebpf_exporter"
+      systemd_service_params: "--web.listen-address=\":{{ ebpf_exporter_port }}\" --config.file=/etc/ebpf_exporter_config.yaml"

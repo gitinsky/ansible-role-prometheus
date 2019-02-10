@@ -1,0 +1,11 @@
+- name: download ebpf_exporter
+  get_url: url="https://github.com/cloudflare/ebpf_exporter/releases/download/v1.1.0/ebpf_exporter-1.1.0.tar.gz" dest=/root/ebpf_exporter.tar.gz
+
+- name: unpack ebpf_exporter
+  unarchive: copy=no src="/root/ebpf_exporter.tar.gz" dest=/opt
+
+- name: create a link
+  file: src=/opt/ebpf_exporter-1.1.0/ebpf_exporter dest=/opt/ebpf_exporter state=link
+
+- name: put /etc/ebpf_exporter_config.yaml
+  template: src=ebpf_exporter_config.yaml dest=/etc/ebpf_exporter_config.yaml backup=yes
