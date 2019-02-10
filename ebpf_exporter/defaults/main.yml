@@ -1,2 +1,2 @@
-ebpf_exporter_user: prometheus
+ebpf_exporter_user: root
 ebpf_exporter_port: 9435
