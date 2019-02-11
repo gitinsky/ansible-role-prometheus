@@ -48,12 +48,7 @@
       - { src: "{{ alertmanager_json.name | replace('.tar.gz','') }}", dst: "{{ alertmanager_base_dir}}/alertmanager" }
   notify: restart alertmanager
 
-- name: check if /etc/alertmanager/alertmanager.yml is presented
-  stat: path=/etc/alertmanager/alertmanager.yml get_md5=no
-  register: alertmanager_conf
-  
 - name: put example alertmanager config file
-  template: dest=/etc/alertmanager/alertmanager.yml src=alertmanager_example.yml
-  when: not alertmanager_conf.stat.exists
+  template: dest=/etc/alertmanager/alertmanager.yml src=alertmanager_example.yml backup=yes
   notify:
       - reload alertmanager
