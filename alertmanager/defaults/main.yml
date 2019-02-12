@@ -15,3 +15,4 @@ alertmanager_user: prometheus
 alertmanager_web_external_url: ""
 
 alertmanager_receivers: []
+alertmanager_cluster_port: 9094
