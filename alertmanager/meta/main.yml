@@ -11,6 +11,6 @@ dependencies:
       systemd_service_name: alertmanager
       systemd_service_user: "{{ alertmanager_user }}"
       systemd_service_command: "{{ alertmanager_base_dir }}/alertmanager/alertmanager"
-      systemd_service_params: "--config.file=\"/etc/alertmanager/alertmanager.yml\" --cluster.advertise-address=\"{{ alertmanager_advertise_address }}:{{ alertmanager_cluster_port }}\" --storage.path=\"{{ alertmanager_data_dir }}\" --web.external-url=\"{{ alertmanager_web_external_url }}\""
+      systemd_service_params: "--config.file=\"/etc/alertmanager/alertmanager.yml\" --cluster.advertise-address=\"{{ alertmanager_advertise_address }}:{{ alertmanager_cluster_port }}\" --storage.path=\"{{ alertmanager_data_dir }}\" --web.external-url=\"{{ alertmanager_web_external_url }}\" --cluster.peer=\"{{ hostvars[groups[alertmanagers_group_name][0]]['alertmanager_advertise_address'] }}:{{ alertmanager_cluster_port }}\""
       systemd_service_config: /etc/alertmanager/alertmanager.yml
       when: prometheus_supervisor == "systemd"
