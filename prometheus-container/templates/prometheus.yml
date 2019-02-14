@@ -23,6 +23,7 @@ scrape_configs:
 {% endfor %}
 {% endfor %}
 
+{% if alertmanagers_group_name is defined %}
 alerting:
   alertmanagers:
     - static_configs:
@@ -30,3 +31,4 @@ alerting:
 {% for host in groups[alertmanagers_group_name] %}
         - {{ hostvars[host]['alertmanager_advertise_address'] }}:{{ alertmanager_cluster_port }}
 {% endfor %}
+{% endif %}
