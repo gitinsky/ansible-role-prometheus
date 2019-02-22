@@ -20,11 +20,11 @@
       return_content: yes
   register: release
   when: not node_exporter_pre_release
-  
+
 - name: set release
   set_fact:
       github_release: "{{ releases.json[0] if node_exporter_pre_release else release.json }}"
-      
+
 - name: get package url
   set_fact:
       node_exporter_json: "{{ (github_release.assets| selectattr('name', 'match', '.*linux-amd64.*')|list)[0] }}"
@@ -47,7 +47,7 @@
 - name: get {{ node_exporter_base_dir }}/node_exporter stats
   stat: path={{ node_exporter_base_dir }}/node_exporter
   register: stats
-  
+
 - name: backup {{ node_exporter_base_dir }}/node_exporter if it exists and not a symlink
   shell: bash -c "mv {{ node_exporter_base_dir }}/node_exporter {{ node_exporter_base_dir }}/node_exporter_$(date '+%Y_%m_%d_%H_%M_%S')"
   when: "{{ stats.stat.exists and not stats.stat.islnk }}"
