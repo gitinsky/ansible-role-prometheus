@@ -16,11 +16,11 @@
       return_content: yes
   register: release
   when: not alertmanager_pre_release
-  
+
 - name: set release
   set_fact:
       github_release: "{{ releases.json[0] if alertmanager_pre_release else release.json }}"
-      
+
 - name: get package url
   set_fact:
       alertmanager_json: "{{ (github_release.assets| selectattr('name', 'match', '.*linux-amd64.*')|list)[0] }}"
@@ -42,10 +42,10 @@
   register: result
   notify: restart alertmanager
 
-- name: make {{ alertmanager_base_dir}}/alertmanager symlink
+- name: make {{ alertmanager_base_dir }}/alertmanager symlink
   file: state=link src={{ item.src }} dest={{ item.dst }}
   with_items:
-      - { src: "{{ alertmanager_json.name | replace('.tar.gz','') }}", dst: "{{ alertmanager_base_dir}}/alertmanager" }
+      - { src: "{{ alertmanager_json.name | replace('.tar.gz','') }}", dst: "{{ alertmanager_base_dir }}/alertmanager" }
   notify: restart alertmanager
 
 - name: put example alertmanager config file
