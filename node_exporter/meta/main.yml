@@ -1,9 +1,21 @@
+galaxy_info:
+  author: Kofonfor
+  description: Prom node exporter role
+  license: MIT
+  min_ansible_version: 2.0
+  platforms:
+  - name: Ubuntu
+    versions:
+      - xenial
+      - bionic
+
 dependencies:
     - role: runit
       runit_service_name: node_exporter
       runit_service_user: "{{ node_exporter_user }}"
       runit_service_command: "{{ node_exporter_base_dir }}/node_exporter"
-      runit_service_params: "--web.listen-address=\":{{ node_exporter_port }}\" --collector.textfile.directory={{ node_exporter_data_dir }} -collectors.enabled=\"{%- set collectors = [] -%}
+      runit_service_params: "--web.listen-address=\":{{ node_exporter_port }}\"
+              --collector.textfile.directory={{ node_exporter_data_dir }} -collectors.enabled=\"{%- set collectors = [] -%}
               {%- if node_exporter_collector_conntrack    and collectors.append('conntrack'   ) -%}{%- endif -%}
               {%- if node_exporter_collector_diskstats    and collectors.append('diskstats'   ) -%}{%- endif -%}
               {%- if node_exporter_collector_entropy      and collectors.append('entropy'     ) -%}{%- endif -%}
@@ -43,7 +55,9 @@ dependencies:
       systemd_service_name: node_exporter
       systemd_service_user: "{{ node_exporter_user }}"
       systemd_service_command: "{{ node_exporter_base_dir }}/node_exporter"
-      systemd_service_params: "--web.listen-address=\":{{ node_exporter_port }}\" --collector.textfile.directory={{ node_exporter_data_dir }} {%- if node_exporter_collector_conntrack %} --collector.conntrack{%- endif -%}
+      systemd_service_params: "--web.listen-address=\":{{ node_exporter_port }}\"
+              --collector.textfile.directory={{ node_exporter_data_dir }}
+              {%- if node_exporter_collector_conntrack %} --collector.conntrack{%- endif -%}
               {%- if node_exporter_collector_diskstats    %} --collector.diskstats{%- endif -%}
               {%- if node_exporter_collector_entropy      %} --collector.entropy{%- endif -%}
               {%- if node_exporter_collector_filefd       %} --collector.filefd{%- endif -%}
