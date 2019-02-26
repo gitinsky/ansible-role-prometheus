@@ -50,7 +50,7 @@
 
 - name: backup {{ node_exporter_base_dir }}/node_exporter if it exists and not a symlink
   shell: bash -c "mv {{ node_exporter_base_dir }}/node_exporter {{ node_exporter_base_dir }}/node_exporter_$(date '+%Y_%m_%d_%H_%M_%S')"
-  when: "{{ stats.stat.exists and not stats.stat.islnk }}"
+  when: stats.stat.exists and not stats.stat.islnk
 
 - name: get node_exporter
   unarchive: src={{ node_exporter_json.browser_download_url }}
