@@ -17,14 +17,13 @@ scrape_configs:
   - job_name: {{ job.name }}
     metrics_path: {{ job.metrics_path }}
     static_configs:
+      - targets:
 {% if job.targets.ansible_group_name is defined %}
 {% for host in groups[job.targets.ansible_group_name] %}
-      - targets:
         - {{ hostvars[host]['ansible_default_ipv4']['address'] }}:{{ job.targets.port }}
 {% endfor %}
 {% else %}
 {% for target in job.targets %}
-      - targets:
         - {{ target.host }}:{{ target.port }}
 {% endfor %}
 {% endif %}
