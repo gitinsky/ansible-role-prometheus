@@ -16,6 +16,7 @@ scrape_configs:
 {% for job in prometheus_jobs %}
   - job_name: {{ job.name }}
     metrics_path: {{ job.metrics_path }}
+{% if not job.targets.aws_region is defined %}
     static_configs:
 {% if job.targets.ansible_group_name is defined %}
 {% for host in groups[job.targets.ansible_group_name] %}
@@ -33,6 +34,13 @@ scrape_configs:
 {% for target in job.targets %}
         - {{ target.host }}:{{ target.port }}
 {% endfor %}
+{% endif %}
+{% else %}
+    ec2_sd_configs:
+      - region: {{ job.targets.aws_region }}
+        access_key: {{ job.targets.aws_access_key }}
+        secret_key: {{ job.targets.aws_secret_key }}
+        port: {{ job.targets.port }}
 {% endif %}
 {% endfor %}
 
