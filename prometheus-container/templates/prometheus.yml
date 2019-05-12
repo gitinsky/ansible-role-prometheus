@@ -42,6 +42,22 @@ scrape_configs:
         secret_key: {{ job.targets.aws_secret_key }}
         port: {{ job.targets.port }}
 {% endif %}
+{% if job.relabel_configs is defined %}
+    relabel_configs:
+{% for config in job.relabel_configs %}
+      - source_labels: [{% for label in config.source_labels %}'{{ label }}'{% if not loop.last %},{% endif %}{% endfor %}]
+{% if config.regex is defined %}
+        regex:         '{{ config.regex }}'
+{% endif %}
+        target_label:  '{{ config.target_label }}'
+{% if config.replacement is defined %}
+        replacement:   '{{ config.replacement }}'
+{% endif %}
+{% if config.action is defined %}
+        action:        '{{ config.action }}'
+{% endif %}
+{% endfor %}
+{% endif %}
 {% endfor %}
 
 {% if alertmanagers_group_name is defined %}
