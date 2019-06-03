@@ -69,3 +69,12 @@ alerting:
         - {{ hostvars[host]['alertmanager_advertise_address'] }}:{{ alertmanager_cluster_port }}
 {% endfor %}
 {% endif %}
+
+{% if prometheus_remote_writes is defined %}
+remote_write:
+{% for remote_write in prometheus_remote_writes %}
+  - url: {{ remote_write['url'] }}
+    queue_config:
+      max_samples_per_send: {{ remote_write['queue_config_max_samples_per_send'] }}
+{% endfor %}
+{% endif %}
