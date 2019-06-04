@@ -1,2 +1,0 @@
-prometheus_scrape_interval: 1m
-alertmanager_cluster_port: 9094
