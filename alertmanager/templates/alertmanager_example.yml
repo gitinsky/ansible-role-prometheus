@@ -12,6 +12,9 @@ route:
   repeat_interval: 3h
 
   routes:
+  - match:
+      receiver: devalerts
+    receiver: devalerts-receiver
 #  - match_re:
 #      service: ^(foo1|foo2|baz)$
 #    receiver: team-X-mails
